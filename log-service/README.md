@@ -61,7 +61,7 @@ mvn exec:java -Dexec.mainClass="edu.escuelaing.arem.App"
 
 - [Diagrama de paquetes](/log-service/src/main/java/edu/escuelaing/arem/)
 
-![Diagrama de paquetes con clases](../../media/pkgs_simple.png?raw=true)
+![Diagrama de paquetes con clases](../../media/log_service_pkgs_simple.png?raw=true)
 
 Los nombres de los paquetes intentan ser representativos en términos de la funcionalidad que está implementada en dicho paquete.
 
