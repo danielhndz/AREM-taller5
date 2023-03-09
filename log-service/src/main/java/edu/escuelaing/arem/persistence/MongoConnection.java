@@ -13,13 +13,14 @@ import com.mongodb.client.MongoDatabase;
 
 public class MongoConnection {
 
-    private static final String URL_STRING = "ec2-xx-xxx-xxx-xx.compute-1.amazonaws.com";
+    private static final String URL_STRING = "ec2-100-24-59-5.compute-1.amazonaws.com";
+    private static final int PORT = 27017;
     private MongoClient mongoClient;
     private MongoDatabase db;
     private MongoCollection<Document> collection;
 
     public MongoConnection() throws UnknownHostException {
-        mongoClient = new MongoClient(URL_STRING, 27017);
+        mongoClient = new MongoClient(URL_STRING, PORT);
         db = mongoClient.getDatabase("arem");
         collection = db.getCollection("logs");
     }

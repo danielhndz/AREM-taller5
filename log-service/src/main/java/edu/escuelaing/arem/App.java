@@ -14,6 +14,7 @@ import spark.Response;
 
 public class App {
 
+    private static final int PORT = 5000;
     private static MongoConnection mongo;
 
     public static void main(String[] args) throws UnknownHostException {
@@ -58,6 +59,6 @@ public class App {
         if (System.getenv("PORT") != null) {
             return Integer.parseInt(System.getenv("PORT"));
         }
-        return 5000;
+        return PORT;
     }
 }

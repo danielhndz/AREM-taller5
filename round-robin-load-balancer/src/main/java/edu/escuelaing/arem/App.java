@@ -14,7 +14,8 @@ import spark.Response;
 
 public class App {
 
-    private static final String URL_STRING = "http://ec2-xx-xxx-xxx-xx.compute-1.amazonaws.com";
+    private static final String URL_STRING = "ec2-100-24-59-5.compute-1.amazonaws.com";
+    private static final int PORT = 4000;
     private static int ports[] = { 8001, 8002, 8003 };
     private static int selected = 0;
 
@@ -25,9 +26,12 @@ public class App {
     }
 
     private static String inputView(Request req, Response res) {
+        res.type("text/html");
+        String server = "Esta actualmente en el LogService #" + String.valueOf(selected + 1);
+        String logsToTable = "";
         String view = "";
         try {
-            URL url = new URL(URL_STRING + ":" + String.valueOf(ports[selected])
+            URL url = new URL("http://" + URL_STRING + ":" + String.valueOf(ports[selected])
                     + "/consultlogs");
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             String inputLine;
@@ -37,57 +41,57 @@ public class App {
                 datos += inputLine;
             }
             String logs[] = datos.split(",");
-            String logsToTable = "";
-            String server = "Esta actualmente en el LogService #" + String.valueOf(selected + 1);
+            logsToTable = "";
             changePortBalance();
             for (String log : logs) {
-                System.out.println("xd  " + log);
+                System.out.println("log  " + log);
                 String info[] = log.split("-");
                 logsToTable += "<tr><td>" + info[0] + "</td><td>" + info[1] + "</td><td>" + info[2] + "</td></tr>";
 
             }
-            view = "<!DOCTYPE html>"
-                    + "<html>"
-                    + "<body style=\"background-color:#32CD32;\">"
-                    + "<style>"
-                    + "table, th, td {"
-                    + "border: 1px solid black;"
-                    + "border-collapse: collapse;"
-                    + "}"
-                    + "</style>"
-                    + "<center>"
-                    + "<h1>Lista de Logs</h1>"
-                    + "<br/>"
-                    + "<h2>" + server + "</h2>"
-                    + "<form name='loginForm' method='post' action='/'>"
-                    + "Log: <input type='text' name='message'/> <br/>"
-                    + "<br/>"
-                    + "<input type='submit' value='submit' />"
-                    + "</form>"
-                    + "<br/>"
-                    + "<Table>"
-                    + "<tr>"
-                    + "<th>No</th>"
-                    + "<th>Message</th>"
-                    + "<th>Date</th>"
-                    + "</tr>"
-                    + logsToTable
-                    + "</Table>"
-                    + "</center>"
-                    + "</body>"
-                    + "</html>";
 
         } catch (MalformedURLException e) {
             // Nothing to do
         } catch (IOException e) {
             // Nothing to do
         }
+        view = "<!DOCTYPE html>"
+                + "<html>"
+                + "<body style=\"background-color:#32CD32;\">"
+                + "<style>"
+                + "table, th, td {"
+                + "border: 1px solid black;"
+                + "border-collapse: collapse;"
+                + "}"
+                + "</style>"
+                + "<center>"
+                + "<h1>Lista de Logs</h1>"
+                + "<br/>"
+                + "<h2>" + server + "</h2>"
+                + "<form name='loginForm' method='post' action='/'>"
+                + "Log: <input type='text' name='message'/> <br/>"
+                + "<br/>"
+                + "<input type='submit' value='submit' />"
+                + "</form>"
+                + "<br/>"
+                + "<Table>"
+                + "<tr>"
+                + "<th>No</th>"
+                + "<th>Message</th>"
+                + "<th>Date</th>"
+                + "</tr>"
+                + logsToTable
+                + "</Table>"
+                + "</center>"
+                + "</body>"
+                + "</html>";
         return view;
     }
 
     private static String register(Request req, Response res) {
         try {
-            URL url = new URL("http://localhost:" + String.valueOf(ports[selected])
+            URL url = new URL("http://"
+                    + URL_STRING + ":" + String.valueOf(ports[selected])
                     + "/savelogs?message=" + (req.queryParams("message").replace(' ', '_')));
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             changePortBalance();
@@ -116,6 +120,6 @@ public class App {
         if (System.getenv("PORT") != null) {
             return Integer.parseInt(System.getenv("PORT"));
         }
-        return 4000;
+        return PORT;
     }
 }

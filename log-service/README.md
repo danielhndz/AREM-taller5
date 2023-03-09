@@ -29,12 +29,14 @@ Luego compile el proyecto con maven:
 
 ```bash
 cd <project-folder>/log-service
-mvn compile
+mvn clean install
 ```
 
 Si salió bien, debería tener una salida similar a esta:
 
 ![compile output](../../media/log_service_mvn_compile.png?raw=true)
+
+El ejemplo muestra el caso de `compile` pero la salida final para `install` debe ser la misma, un `BUILD SUCCESS` en verde.
 
 ### Using
 

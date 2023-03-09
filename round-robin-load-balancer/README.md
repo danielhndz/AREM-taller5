@@ -29,19 +29,21 @@ Luego compile el proyecto con maven:
 
 ```bash
 cd <project-folder>/round-robin-load-balancer
-mvn compile
+mvn clean install
 ```
 
 Si salió bien, debería tener una salida similar a esta:
 
 ![compile output](../../media/load_balancer_mvn_compile.png?raw=true)
 
+El ejemplo muestra el caso de `compile` pero la salida final para `install` debe ser la misma, un `BUILD SUCCESS` en verde.
+
 ### Using
 
 Debe estar en la carpeta raíz del proyecto para ejecutarlo correctamente.
 
 ```bash
-mvn exec:java -Dexec.mainClass="edu.escuelaing.arem.Launcher"
+mvn exec:java -Dexec.mainClass="edu.escuelaing.arem.App"
 ```
 
 ![output for first use](../../media/load_balancer_using1.png?raw=true)
